@@ -4,11 +4,13 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { getHours, isCurrentDay } from "@/lib/getTime";
+import { EventRenderer } from "./event-renderer";
+import { dayEvents } from "@/lib/data";
 
 export default function DayView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const {  openPopover } = useEventStore()
-  const {userSelectedDate, setDate } = useDateStore();
+  const { openPopover } = useEventStore();
+  const { userSelectedDate, setDate } = useDateStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,11 +62,15 @@ export default function DayView() {
                 key={i}
                 className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
                 onClick={() => {
-                  setDate(userSelectedDate.hour(hour.hour()))
-                  openPopover()
+                  setDate(userSelectedDate.hour(hour.hour()));
+                  openPopover();
                 }}
               >
-
+                <EventRenderer
+                  events={dayEvents}
+                  date={userSelectedDate.hour(hour.hour())}
+                  view="day"
+                />
               </div>
             ))}
 

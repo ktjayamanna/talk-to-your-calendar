@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
+import { EventRenderer } from "./event-renderer";
+import { weekEvents } from "@/lib/data";
 
 export default function WeekView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const {   openPopover } = useEventStore()
+  const { openPopover } = useEventStore();
 
-  const {userSelectedDate,  setDate} = useDateStore();
+  const { userSelectedDate, setDate } = useDateStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,12 +78,15 @@ export default function WeekView() {
                       key={i}
                       className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
                       onClick={() => {
-                        setDate(dayDate.hour(hour.hour()))
-                        openPopover()
+                        setDate(dayDate.hour(hour.hour()));
+                        openPopover();
                       }}
-                   >
-
-
+                    >
+                      <EventRenderer
+                        events={weekEvents}
+                        date={dayDate.hour(hour.hour())}
+                        view="week"
+                      />
                     </div>
                   ))}
                   {/* Current time indicator */}
