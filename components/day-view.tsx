@@ -1,4 +1,4 @@
-import { useDateStore } from "@/lib/store";
+import { useDateStore, useEventStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
@@ -7,7 +7,8 @@ import { getHours, isCurrentDay } from "@/lib/getTime";
 
 export default function DayView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const { userSelectedDate } = useDateStore();
+  const {  openPopover } = useEventStore()
+  const {userSelectedDate, setDate } = useDateStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,7 +59,13 @@ export default function DayView() {
               <div
                 key={i}
                 className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
-              ></div>
+                onClick={() => {
+                  setDate(userSelectedDate.hour(hour.hour()))
+                  openPopover()
+                }}
+              >
+
+              </div>
             ))}
 
             {/* Current time indicator */}

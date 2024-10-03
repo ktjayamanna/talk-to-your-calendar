@@ -1,5 +1,5 @@
 import { getHours, getWeekDays } from "@/lib/getTime";
-import { useDateStore } from "@/lib/store";
+import { useDateStore, useEventStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
@@ -7,7 +7,9 @@ import { ScrollArea } from "./ui/scroll-area";
 
 export default function WeekView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const { userSelectedDate } = useDateStore();
+  const {   openPopover } = useEventStore()
+
+  const {userSelectedDate,  setDate} = useDateStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,7 +75,14 @@ export default function WeekView() {
                     <div
                       key={i}
                       className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
-                    ></div>
+                      onClick={() => {
+                        setDate(dayDate.hour(hour.hour()))
+                        openPopover()
+                      }}
+                   >
+
+
+                    </div>
                   ))}
                   {/* Current time indicator */}
 
