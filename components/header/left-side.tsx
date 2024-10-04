@@ -1,19 +1,21 @@
-'use client'
+"use client";
 
 import React from "react";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useDateStore, useViewStore } from "@/lib/store";
+import { useDateStore, useToggleSideBarStore, useViewStore } from "@/lib/store";
 import dayjs from "dayjs";
 
 export default function HeaderLeft() {
   const todaysDate = dayjs();
-  const {userSelectedDate,  setDate, setMonth, selectedMonthIndex  } = useDateStore();
+  const { userSelectedDate, setDate, setMonth, selectedMonthIndex } =
+    useDateStore();
+
+  const { setSideBarOpen } = useToggleSideBarStore();
 
   const { selectedView } = useViewStore();
-
 
   const handleTodayClick = () => {
     switch (selectedView) {
@@ -64,13 +66,15 @@ export default function HeaderLeft() {
     }
   };
 
-
-
   return (
     <div className="flex items-center gap-3">
       {/* Sidebar Toggle and Calendar Icon */}
       <div className="hidden items-center lg:flex">
-        <Button variant="ghost" className="rounded-full p-2">
+        <Button
+          variant="ghost"
+          className="rounded-full p-2"
+          onClick={() => setSideBarOpen()}
+        >
           <Menu className="size-6" />
         </Button>
         <Image src="/img/calendar_1_2x.png" width={40} height={40} alt="icon" />
@@ -78,18 +82,26 @@ export default function HeaderLeft() {
       </div>
 
       {/* Today Button */}
-      <Button variant="outline"  onClick={handleTodayClick}>Today</Button>
+      <Button variant="outline" onClick={handleTodayClick}>
+        Today
+      </Button>
 
       {/* Navigation Controls */}
       <div className="flex items-center gap-3">
-        <MdKeyboardArrowLeft className="size-6 cursor-pointer font-bold"  onClick={handlePrevClick}  />
-        <MdKeyboardArrowRight className="size-6 cursor-pointer font-bold" onClick={handleNextClick} />
+        <MdKeyboardArrowLeft
+          className="size-6 cursor-pointer font-bold"
+          onClick={handlePrevClick}
+        />
+        <MdKeyboardArrowRight
+          className="size-6 cursor-pointer font-bold"
+          onClick={handleNextClick}
+        />
       </div>
 
       {/* Current Month and Year Display */}
       <h1 className="hidden text-xl lg:block">
-      {dayjs(new Date(dayjs().year(), selectedMonthIndex)).format(
-          "MMMM YYYY"
+        {dayjs(new Date(dayjs().year(), selectedMonthIndex)).format(
+          "MMMM YYYY",
         )}
       </h1>
     </div>
