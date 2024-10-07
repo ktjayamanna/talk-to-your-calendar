@@ -77,7 +77,12 @@ export default function HeaderLeft() {
         >
           <Menu className="size-6" />
         </Button>
-        <Image src="/img/calendar_1_2x.png" width={40} height={40} alt="icon" />
+        <Image
+          src={`/img/calendar_${todaysDate.date().toString()}_2x.png`}
+          width={40}
+          height={40}
+          alt="icon"
+        />
         <h1 className="text-xl">Calendar</h1>
       </div>
 
