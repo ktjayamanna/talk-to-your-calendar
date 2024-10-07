@@ -5,11 +5,11 @@ import React, { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { getHours, isCurrentDay } from "@/lib/getTime";
 import { EventRenderer } from "./event-renderer";
-import { dayEvents } from "@/lib/data";
+
 
 export default function DayView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const { openPopover } = useEventStore();
+  const { openPopover, events } = useEventStore();
   const { userSelectedDate, setDate } = useDateStore();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function DayView() {
                 }}
               >
                 <EventRenderer
-                  events={dayEvents}
+                  events={events}
                   date={userSelectedDate.hour(hour.hour())}
                   view="day"
                 />

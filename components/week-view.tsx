@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { EventRenderer } from "./event-renderer";
-import { weekEvents } from "@/lib/data";
+
 
 export default function WeekView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
-  const { openPopover } = useEventStore();
+  const { openPopover, events } = useEventStore();
 
   const { userSelectedDate, setDate } = useDateStore();
 
@@ -83,7 +83,7 @@ export default function WeekView() {
                       }}
                     >
                       <EventRenderer
-                        events={weekEvents}
+                        events={events}
                         date={dayDate.hour(hour.hour())}
                         view="week"
                       />

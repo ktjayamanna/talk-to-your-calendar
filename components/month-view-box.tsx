@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import React from "react";
 import { EventRenderer } from "./event-renderer";
-import { monthEvents } from "@/lib/data";
+
 
 export default function MonthViewBox({
   day,
@@ -12,7 +12,7 @@ export default function MonthViewBox({
   day: dayjs.Dayjs | null;
   rowIndex: number;
 }) {
-  const { openPopover } = useEventStore();
+  const { openPopover, events } = useEventStore();
 
   const { setDate } = useDateStore();
 
@@ -56,7 +56,7 @@ export default function MonthViewBox({
           {isFirstDayOfMonth ? day.format("MMM D") : day.format("D")}
         </h4>
       </div>
-      <EventRenderer date={day} view="month" events={monthEvents} />
+      <EventRenderer date={day} view="month" events={events} />
     </div>
   );
 }

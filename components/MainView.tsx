@@ -1,13 +1,24 @@
 "use client";
-import { useDateStore, useEventStore, useViewStore } from "@/lib/store";
+import {
+  CalendarEventType,
+  useDateStore,
+  useEventStore,
+  useViewStore,
+} from "@/lib/store";
 import MonthView from "./month-view";
 import SideBar from "./sidebar/SideBar";
 import WeekView from "./week-view";
 import DayView from "./day-view";
 import EventPopover from "./event-popover";
 import { EventSummaryPopover } from "./event-summary-popover";
+import { useEffect } from "react";
+import dayjs from "dayjs";
 
-export default function MainView() {
+export default function MainView({
+  eventsData,
+}: {
+  eventsData: CalendarEventType[];
+}) {
   const { selectedView } = useViewStore();
 
   const {
@@ -16,9 +27,21 @@ export default function MainView() {
     isEventSummaryOpen,
     closeEventSummary,
     selectedEvent,
+    setEvents,
   } = useEventStore();
 
   const { userSelectedDate } = useDateStore();
+
+  useEffect(() => {
+    const mappedEvents: CalendarEventType[] = eventsData.map((event) => ({
+      id: event.id,
+      date: dayjs(event.date),
+      title: event.title,
+      description: event.description,
+    }));
+
+    setEvents(mappedEvents);
+  }, [eventsData, setEvents]);
 
   return (
     <div className="flex">
