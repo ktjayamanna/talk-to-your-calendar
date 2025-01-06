@@ -10,6 +10,8 @@ export async function createEvent(formData:  FormData): Promise<{ error: string 
   const description = formData.get('description') as string;
   const date = formData.get('date') as string;
   const time = formData.get('time') as string;
+  console.log("FormData to be submitted:", Object.fromEntries(formData.entries()));
+
 
 
   if (!title || !description || !date || !time) {
